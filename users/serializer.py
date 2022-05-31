@@ -1,8 +1,20 @@
+import re
 from .models import User
+from django.forms import ValidationError
 
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
+REGEX_EMAIL    = '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+REGEX_PASSWORD = '^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$'
+
+def validate_password(password):
+    if not re.match(REGEX_PASSWORD, password):
+        raise ValidationError("Invalid password")
+    
+def validate_email(email):
+    if not re.match(REGEX_EMAIL, email):
+        raise ValidationError("Invalid email")
 
 class SignupSirializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -21,9 +33,10 @@ class SignupSirializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['password'] != data['password2']:
             raise serializers.ValidationError({
-                "password" : "Pass word fields didn't match"
+                "password" : "Password fields didn't match"
             })
-        
+        validate_email(data['email'])
+        validate_password(data['password'])
         return data
 
     def create(self, validated_data):
