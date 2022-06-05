@@ -1,7 +1,7 @@
-import re
+import re, jwt
 from .models import User
 from django.forms import ValidationError
-
+from django.conf import settings
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -79,13 +79,21 @@ class SigninSirializer(serializers.ModelSerializer):
             raise serializers.ValidationError("User does not exist")
         
 
-        token = RefreshToken.for_user(user=user)
+        refresh_token = RefreshToken.for_user(user=user)
+        access_token = refresh_token.access_token
+
+        decode_jwt = jwt.decode(str(access_token), settings.SECRET_KEY, algorithms="HS256")
+
+        decode_jwt['is_staff'] = user.is_staff
+        decode_jwt['is_admin'] = user.is_admin
+        
+        encode_jwt = jwt.encode(decode_jwt, settings.SECRET_KEY, algorithm="HS256").decode('utf-8')
         data = {
             'user' : user.id,
-            'refresh_token' : str(token),
-            'access_token' : str(token.access_token)
+            'refresh_token' : str(refresh_token),
+            'access_token' : str(encode_jwt)
         }
-        user.refreshtoken = token
+        user.refreshtoken = refresh_token
         user.save()
         return data
 

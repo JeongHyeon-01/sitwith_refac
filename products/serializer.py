@@ -1,4 +1,5 @@
 
+from itertools import product
 from unicodedata import category
 from .models import Category,Color, Product,ProductColor
 
@@ -17,10 +18,11 @@ class Colorserializers(serializers.ModelSerializer):
         fields ="__all__"
 
 class ProductSerializers(serializers.ModelSerializer):
-
+    color = serializers.CharField(source='colors.name', read_only= True)
+    category = serializers.CharField(source='category.title',read_only = True)
     class Meta:
         model = Product
-        fields = ['id','name','price']
+        fields = ['category','color','id','name','price','inventory']
 
 class ProductCreateSerializers(serializers.ModelSerializer):
 
@@ -43,3 +45,4 @@ class ProductCreateSerializers(serializers.ModelSerializer):
         )
     
         return product
+
