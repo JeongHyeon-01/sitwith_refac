@@ -27,6 +27,7 @@ class Product(models.Model):
     category = models.ForeignKey('Category', on_delete = models.CASCADE,related_name='categories')
     colors   = models.ForeignKey('Color', on_delete=models.PROTECT ,related_name='colors')
     inventory = models.IntegerField()
+    
     class Meta: 
         db_table = 'products'
 

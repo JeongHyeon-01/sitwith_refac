@@ -46,11 +46,12 @@ INSTALLED_APPS = [
     'users',
     'utils',
     'products',
+    'carts',
     #simple_jwt
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist'
-
-
+    'rest_framework_simplejwt.token_blacklist',
+    #django_filter
+    'django_filters'
 ]
 AUTH_USER_MODEL = 'users.User'
 SITE_ID = 1
@@ -164,9 +165,14 @@ APPEND_SLASH = False
 
 #JWT
 REST_FRAMEWORK = {	
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES' : (
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    )
 }
 REST_USE_JWT = True
 
@@ -177,4 +183,6 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'TOKEN_USER_CLASS': 'users.User',
     'ALGORITHM': 'HS256',
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
 }
