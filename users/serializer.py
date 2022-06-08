@@ -97,7 +97,10 @@ class SigninSirializer(serializers.ModelSerializer):
         user.save()
         return data
 
-
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields =['email','nickname']
 
 
  

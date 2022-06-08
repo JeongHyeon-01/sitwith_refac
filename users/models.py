@@ -40,7 +40,7 @@ class User(AbstractBaseUser,TimeStampZone, PermissionsMixin):
     email = models.CharField(max_length=200,unique=True)
     nickname = models.CharField(max_length=45)
     password = models.CharField(max_length=200)
-    refreshtoken = models.CharField(max_length=200)
+    refreshtoken = models.TextField()
     deleted_at = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)    
     is_admin = models.BooleanField(default=False)    
@@ -54,6 +54,10 @@ class User(AbstractBaseUser,TimeStampZone, PermissionsMixin):
         'password'
     ]
     
+    def __str__(self):
+        return self.nickname
+
+
 
     class Meta:
         db_table = 'users'

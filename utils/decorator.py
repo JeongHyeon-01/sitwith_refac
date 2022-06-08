@@ -24,7 +24,7 @@ def login_authorization(func):
                 user,
                 status=status.HTTP_200_OK
             )
-
+            request.user =user
             response.set_cookie('access_token', access_token)
             response.set_cookie('refresh_token', user.refreshtoken)
             return func(self,request,*args,**kwargs)
@@ -42,11 +42,10 @@ def login_authorization(func):
                     return response
 
             except TokenError: # refresh 토큰까지 만료 시
-                return Response({"message": "로그인이 만료되었습니다."}, redirect='users/signin/' ,status=status.HTTP_200_OK)
+                return Response({"message": "로그인이 만료되었습니다."},status=status.HTTP_200_OK)
 
             except(jwt.exceptions.InvalidTokenError): # 토큰 invalid 인 모든 경우
                 return Response({"message": "로그인이 만료되었습니다."}, status=status.HTTP_200_OK)
-
     return wapper                   
 
 def admin_login_authorization(func):
