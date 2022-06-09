@@ -1,19 +1,16 @@
-from http.cookiejar import Cookie
 from rest_framework import serializers
 from .models import Cart
-from products.models import Product
-from users.models import User
-from products.serializer import ProductSerializers
-from users.serializer import UserSerializer
 
 class CartSerializers(serializers.ModelSerializer):
     user_info    = serializers.StringRelatedField(read_only = True)
-    quantity = serializers.IntegerField()
-    
+    products = serializers.StringRelatedField(read_only=True,source = 'product_info')
+    quantity     = serializers.IntegerField()
+    total_price  = Cart.total_price 
+    single_price = Cart.single_price
 
     class Meta:
         model = Cart
-        fields = ['user_info','product_info',"quantity"]
+        fields = ['user_info','product_info','products',"quantity","single_price","total_price"]
 
 
 
