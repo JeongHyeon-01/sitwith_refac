@@ -36,11 +36,11 @@ class UserSignInTest(TestCase):
         response = client.post('/users/signin/', json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
     
-    def test_users_signin_post_success_test(self):
+    def test_users_signin_post_wrong_password_test(self):
         user = User.objects.get(id =1)
         data = {
             'email' : 'test@test.com',
-            'password':'1q2w3e4r5t!'
+            'password':'1q2w3e4r!'
         }
         if user.email == data['email'] and check_password(data['password'],user.password):
             response = 200    
@@ -48,22 +48,18 @@ class UserSignInTest(TestCase):
             response = 400
 
         response = client.post('/users/signin/', json.dumps(data), content_type='application/json')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
 
+    def test_users_signin_post_wrong_email_test(self):
+        user = User.objects.get(id =1)
+        data = {
+            'email' : 'testm',
+            'password':'1q2w3e4r!'
+        }
+        if user.email == data['email'] and check_password(data['password'],user.password):
+            response = 200    
+        else:
+            response = 400
 
-
-#     def test_user_signin_success(self):
-        
-#         user = User.objects.get(id =1)
-#         print(user)
-#         data = {
-#             'email' : user.email,
-#             'password' : '1q2w3e4r5t'
-#         }
-
-#         if user.email == data['email'] and check_password(data['password'],user.password):
-#             response = 200
-#         else:
-#             response = 400
-        
-#         self.assertEqual(response,400)
+        response = client.post('/users/signin/', json.dumps(data), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
