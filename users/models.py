@@ -56,8 +56,6 @@ class User(AbstractBaseUser,TimeStampZone, PermissionsMixin):
     
     def __str__(self):
         return self.nickname
-
-
-
+        
     class Meta:
         db_table = 'users'

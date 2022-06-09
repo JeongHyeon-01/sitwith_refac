@@ -30,7 +30,6 @@ class CartView(generics.ListCreateAPIView):
     def list(self, request):
         queryset = self.get_queryset()
         serializer = CartSerializers(queryset, many=True)
-        print(serializer.data)
         return Response(serializer.data)
 
 
