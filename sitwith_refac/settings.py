@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = SECRET_KEY
-SECRET_KEY = os.environ['secret_key']
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-mnt%vd887%9-e-6-_6s3vy(lyz!zfh42)n*5@$^(-t7bstd3r!')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 
 ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com']
 
@@ -68,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'sitwith_refac.urls'
