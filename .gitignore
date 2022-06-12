@@ -747,5 +747,6 @@ my_settings.py
 
 *.csv
 db_uploader.py
-
+.Python
+.DS_Store
 .env
