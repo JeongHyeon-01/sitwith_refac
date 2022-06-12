@@ -3,7 +3,7 @@ import json
 from urllib import response
 from django.test import TestCase,Client
 from products.models import Product,Category,Color
-
+from users.models import User
 client = Client()
 class CategoryTest(TestCase):
     def setUp(self):

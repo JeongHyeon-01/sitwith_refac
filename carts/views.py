@@ -9,7 +9,6 @@ from users.models import User
 from carts.models import Cart
 from utils.decorator import login_authorization,admin_login_authorization
 from .serializers import CartSerializers
-from utils.permission import CustomReadOnly
 
 class CartView(generics.ListCreateAPIView):
     serializer_class = CartSerializers

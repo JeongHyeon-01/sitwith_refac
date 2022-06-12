@@ -1,28 +1,23 @@
-from multiprocessing import AuthenticationError
-from unicodedata import category
-from django.shortcuts import render
-from django.db.models import Q
-
 from .models import Category,Color,Product
 from .serializer import CategorySerializer,Colorserializers, ProductCreateSerializers,ProductSerializers
 from rest_framework import generics, status,filters
-from utils.decorator import login_authorization,admin_login_authorization
 from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
-
+from utils.permission import IsLoggedInUserOrAdmin, IsAdminUser, IsAdminUserOrReadOnly
 
 class CategoryCreatView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserOrReadOnly]
    
 class ColorCreatView(generics.CreateAPIView):
     queryset = Color.objects.all()
     serializer_class = Colorserializers
-
+    permission_classes = [IsAdminUser]
 class ProductCreateView(generics.CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateSerializers
-
+    permission_classes = [IsAdminUser]
 
 class ProdcutDetailAdminView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
@@ -42,3 +37,4 @@ class ProductDetailView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
     permission_classes = [AllowAny]
+    
