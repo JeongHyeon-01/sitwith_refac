@@ -3,7 +3,7 @@ from .serializer import CategorySerializer,Colorserializers, ProductCreateSerial
 from rest_framework import generics, status,filters
 from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
-from utils.permission import IsLoggedInUserOrAdmin, IsAdminUser, IsAdminUserOrReadOnly
+from utils.permission import IsAdminUser, IsAdminUserOrReadOnly
 
 class CategoryCreatView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
