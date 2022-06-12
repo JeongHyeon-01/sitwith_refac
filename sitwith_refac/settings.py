@@ -15,7 +15,6 @@ import environ
 from datetime import timedelta
 from pathlib import Path
 from my_settings import SECRET_KEY, DATABASES
-
 env = environ.Env()
 environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
