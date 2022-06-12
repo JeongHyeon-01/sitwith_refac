@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     #django_filter
-    'django_filters'
+    'django_filters',
 ]
 AUTH_USER_MODEL = 'users.User'
 SITE_ID = 1
@@ -166,7 +166,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES' : (
         'rest_framework.authentication.SessionAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
     ),
     'DEFAULT_PERMISSTION_CLASSES' : (
         'rest_framework_api_key.permissions.HasAPIKey'
