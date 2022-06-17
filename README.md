@@ -1,7 +1,7 @@
 # SitWith
-> 간략한 프로젝트 소개 문구를 작성합니다.
+> 기존 프로젝트 에서 Django View를 사용하여 제작했던 SitWith를 Rest_Frame work를 사용하여 리팩토링을 진행
 
-기존 프로젝트 에서 Django View를 사용하여 제작했던 SitWith를 Rest_Frame work를 사용하여 리팩토링을 진행
+
 
 ## 개발 환경 설정
 
